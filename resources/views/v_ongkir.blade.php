@@ -92,7 +92,7 @@ Cek ongkir
           });
 
           $("#servis").change(function () {
-              nominal = $(this).find(':selected').attr('data-ongkir');
+              nominal = typeof $(this).find(':selected').attr('data-ongkir') == 'undefined'? 0:$(this).find(':selected').attr('data-ongkir');
               $('#hasil_ongkir').val(format_rupiah(nominal));
           });
       });
@@ -102,6 +102,9 @@ Cek ongkir
           var destination = $("#city").val();
           var kurir = $("#eks").val();
           origin = $("#awal").val();
+          $('#servis').val('');
+          $('#hasil_ongkir').val('');
+          $('#servis').html("<option></option>");
           $.ajax({
               type: "GET",
               url: "{{ url('biayakirim') }}?origin=" + origin + "&destination=" + destination + "&weight=200&courier=" + kurir,
